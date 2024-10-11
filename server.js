@@ -11,7 +11,6 @@ const port = process.env.PORT || 3000
 dotenv.config()
 
 
-
 app.use(bodyParser.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -36,10 +35,12 @@ dbConnection.run();
 app.get('/', (req, res) => res.send('Welcome To Haptic Store !'));
 app.use("/", userRouter);
 
+
 // send back a 404 if no other route matches
 app.use((req, res) => {
     res.status(404).send('<h1>Error</h1><p>Sorry, that route does not exist</p>')
 })
+
 
 // Use '0.0.0.0' to listen on all interfaces (localhost and IP)
 app.listen(port, '0.0.0.0', () => {
