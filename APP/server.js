@@ -7,6 +7,8 @@ const ipAddress = require('./services/getMyIP');
 const myHost = require('./services/batchFileHelper');
 const dbConnection = require('./db/connection');
 const userRouter = require('./routers/users.Router');
+const categoryRouter = require('./routers/category.Router');
+
 const port = process.env.PORT || 3000
 dotenv.config()
 
@@ -34,6 +36,8 @@ dbConnection.run();
 
 app.get('/', (req, res) => res.send('Welcome To Haptic Store !'));
 app.use("/", userRouter);
+app.use("/", categoryRouter);
+
 
 
 // send back a 404 if no other route matches

@@ -12,7 +12,7 @@ exports.signInWithUsernamePassword = async (req, res) => {
         if(!user){
             return res.status(401).send({
                 status:false,
-                message: "userName or password is Wrong..!"
+                message: "Username or Password is Wrong..!"
             });
         }
 
@@ -21,7 +21,7 @@ exports.signInWithUsernamePassword = async (req, res) => {
         if (!isMatch) {
           return res.status(401).send({
               status: false,
-              message: 'userName or password is Wrong..!'
+              message: 'Username or Password is Wrong..!'
           });
         }
         
