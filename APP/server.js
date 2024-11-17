@@ -3,7 +3,8 @@ const app = express()
 const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const cors = require('cors');
-const ipAddress = require('./services/getMyIP');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger/swagger.json");
 const myHost = require('./services/batchFileHelper');
 const dbConnection = require('./db/connection');
 const userRouter = require('./routers/users.Router');
@@ -39,6 +40,10 @@ app.get('/', (req, res) => res.send('Welcome To Haptic Store !'));
 app.use("/", userRouter);
 app.use("/", categoryRouter);
 app.use('/', adminProductRouter);
+
+// Swagger API documentation
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 

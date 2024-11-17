@@ -1,0 +1,112 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Haptic Store API",
+        "description": "Haptic is e-commerce system",
+        "license": {
+            "name": "ISC"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Haptic Store",
+            "description": "API"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/admin/category": {
+            "get": {
+                "description": " get all categories",
+                "tags": [
+                    "Haptic Store"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All categories fetched successfully.",
+                        "schema": {
+                            "type": "array",
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/category/{categoryId}": {
+            "get": {
+                "description": "get category by id",
+                "tags": [
+                    "Haptic Store"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "category id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category fetched successfully.",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Category": {
+            "type": "object",
+            "properties": {
+                "categoryId": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "parentId": {
+                    "type": "string"
+                },
+                "createdOn": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedOn": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "required": [
+                "categoryId",
+                "name"
+            ]
+        }
+    }
+}
