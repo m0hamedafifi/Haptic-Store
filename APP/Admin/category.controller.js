@@ -1,6 +1,10 @@
 const Category = require("../models/category.model");
 const util = require("../util/utility");
 
+//-----------------------------------------
+// Add new category
+//----------------------------------------
+
 exports.createCategory = async (req, res) => {
   try {
     // get the latest id of the category from the categories collection and increment it by one to create a unique id for the new category
@@ -19,7 +23,7 @@ exports.createCategory = async (req, res) => {
       createdOn: util.dateFormat(),
     };
     console.log(data);
-    
+
     // check category name is already exist or not already
     const categoryExistOrNot = await Category.findOne({ name: data.name });
     if (categoryExistOrNot) {
@@ -47,20 +51,25 @@ exports.createCategory = async (req, res) => {
   }
 };
 
-
 //=======================================
 //get all categories
 //=======================================
 
 exports.getAllCategories = async (req, res) => {
   try {
-    const categories = await Category.find({},{categoryId:1,
-        name:1,
-        description:1,
-        parentId:1,
-        createdOn:1,
-        _id:0
-    }).sort({categoryId: "asc"}).exec();
+    const categories = await Category.find(
+      {},
+      {
+        categoryId: 1,
+        name: 1,
+        description: 1,
+        parentId: 1,
+        createdOn: 1,
+        _id: 0,
+      }
+    )
+      .sort({ categoryId: "asc" })
+      .exec();
     res.status(200).send({
       status: true,
       message: "All categories fetched successfully..!",
@@ -75,6 +84,49 @@ exports.getAllCategories = async (req, res) => {
   }
 };
 
+//=======================================
+//get categorie by categoryID
+//=======================================
+
+exports.getCategoryById = async (req, res) => {
+  try {
+    const categoryId = req.params.code;
+    if (!categoryId) {
+      return res.status(400).send({
+        status: false,
+        message: "categoryId is required..!",
+      });
+    }
+    const category = await Category.findOne(
+      { categoryId: categoryId },
+      {
+        categoryId: 1,
+        name: 1,
+        description: 1,
+        parentId: 1,
+        createdOn: 1,
+        _id: 0,
+      }
+    ).exec();
+    if (!category) {
+      return res.status(404).send({
+        status: false,
+        message: "Category not found..!",
+      });
+    }
+    res.status(200).send({
+      status: true,
+      message: "Category fetched successfully..!",
+      results: category,
+    });
+  } catch (err) {
+    console.log("Error at getCategoryById:", err.message);
+    res.status(500).send({
+      status: false,
+      message: "Internal server error...!",
+    });
+  }
+};
 
 //=====================================================
 // delete  category by id
@@ -84,7 +136,9 @@ exports.deleteCategoryById = async (req, res) => {
   try {
     const categoryId = req.query.categoryId;
 
-    const category = await Category.findOneAndDelete({categoryId: categoryId});
+    const category = await Category.findOneAndDelete({
+      categoryId: categoryId,
+    });
     if (!category) {
       return res.status(404).send({
         status: false,
@@ -111,8 +165,12 @@ exports.deleteCategoryById = async (req, res) => {
 exports.updateCategoryById = async (req, res) => {
   try {
     const categoryId = req.query.categoryId;
-    
-    const category = await Category.findOneAndUpdate({categoryId: categoryId}, req.body, { new: true });
+
+    const category = await Category.findOneAndUpdate(
+      { categoryId: categoryId },
+      req.body,
+      { new: true }
+    );
     if (!category) {
       return res.status(404).send({
         status: false,
