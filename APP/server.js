@@ -4,13 +4,12 @@ const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger/swagger.json");
+const swaggerDocument = require("./swagger/openApi.json");
 const myHost = require('./services/batchFileHelper');
 const dbConnection = require('./db/connection');
 const userRouter = require('./routers/users.Router');
 const categoryRouter = require('./routers/category.Router');
 const adminProductRouter = require('./routers/admin.Products.Router');
-
 const port = process.env.PORT || 3000
 dotenv.config()
 
@@ -42,9 +41,7 @@ app.use("/", categoryRouter);
 app.use('/', adminProductRouter);
 
 // Swagger API documentation
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 
 
 // send back a 404 if no other route matches

@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: Haptic Store API
+  version: 1.0.0
+  description: Haptic is an e-commerce system
+  license:
+    name: ISC
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+tags:
+  - name: "Haptic Store > Category Module"
+    description: "Operations related to Category management"
+paths:
+  /admin/category:
+    get:
+      description: "Get all categories"
+      tags:
+        - Haptic Store > Category Module
+      responses:
+        200:
+          description: "All categories fetched successfully."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+
+  /admin/category/{categoryId}:
+    get:
+      description: "Get category by ID"
+      tags:
+        - Haptic Store > Category Module
+      parameters:
+        - name: categoryId
+          in: path
+          description: "Category ID"
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Category fetched successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        404:
+          description: "Category not found"
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        categoryId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        parentId:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        updatedOn:
+          type: string
+          format: date-time
+      required:
+        - categoryId
+        - name
