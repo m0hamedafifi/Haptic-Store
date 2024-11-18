@@ -49,7 +49,6 @@ app.use((req, res) => {
     res.status(404).send('<h1>Error</h1><p>Sorry, that route does not exist</p>')
 })
 
-
 // Use '0.0.0.0' to listen on all interfaces (localhost and IP)
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${port}`);
